@@ -1,0 +1,241 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Login Basic{% endblock  %}
+{% block link %}{% endblock  %}
+{% block content %}
+
+              <!-- Basic Layout & Basic with Icons -->
+              <div class="container">
+                <div class="row mt-5">
+              
+                  <!-- Basic with Icons -->
+                  <div class="col-xxl">
+                    <div class="card mb-4">
+                      <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Book Ticket</h5>
+                      </div>
+                      <div class="card-body">
+                        <form method="POST">
+                          {% csrf_token %}
+                          {% for x in all_bus %}
+                          {% for y in bus %}
+                          <div class="mb-3 form-password-toggle">
+                            <div class="mb-3">
+                              <label class="form-label" for="firstname">User Name</label>
+                              <div class="input-group input-group-merge">
+                                <input
+                                type="text"
+                                id="user"
+                                class="form-control"
+                                name="user"
+                                value="{{request.user.username}}"
+                                placeholder=""
+                                aria-describedby="user"
+                                readonly
+                                title="Not Change"
+                                style="cursor:not-allowed"
+                                >
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mb-3 ">
+                            <label class="form-label" for="firstname">Bus Name</label>
+                            <div class="input-group input-group-merge">
+                              <input
+                              type="text"
+                              id="bus"
+                              class="form-control"
+                              name="bus"
+                              value="{{x.bus_name}}"
+                              placeholder=""
+                              aria-describedby="address"
+                              readonly
+                              title="Not Change"
+                              style="cursor:not-allowed"
+                              >
+                              </div>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label" for="firstname">Your Root</label>
+                            <div class="input-group input-group-merge">
+                              <input
+                              type="text"
+                              id="journey"
+                              class="form-control"
+                              name="journey"
+                              value="{{y.start_point}} To {{y.end_point}}"
+                              placeholder=""
+                              aria-describedby="address"
+                              readonly
+                              title="Not Change"
+                              style="cursor:not-allowed"
+                              >
+                            </div>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label" for="firstname">selected seat </label>
+                            <div class="input-group input-group-merge">
+                              <input
+                              type="text"
+                              id="slected_seat"
+                              class="form-control"
+                              name="slected_seat"
+                              value="{{selected_seats}}"
+                              placeholder=""
+                              aria-describedby="address"
+                              readonly
+                              title="Not Change"
+                              style="cursor:not-allowed"
+                              >
+                            </div>
+                          </div>
+                          <div class="mb-3 ">
+                            <label class="form-label" for="firstname"> Seat</label>
+                            <div class="input-group input-group-merge">
+                              <input
+                              type="text"
+                              id="seats"
+                              class="form-control"
+                              name="seats"
+                              value="{{seat_list}}"
+                              placeholder=""
+                              aria-describedby="address"
+                              readonly
+                              title="Not Change"
+                              style="cursor:not-allowed"
+                              >
+                            </div>
+                          </div>
+                          <div class="mb-3 ">
+                            <label class="form-label" for="firstname">Fare</label>
+                            <div class="input-group input-group-merge">
+                              <input
+                              type="text"
+                              id="fare"
+                              class="form-control"
+                              name="fare"
+                              value="{{total}}"
+                              placeholder=""
+                              aria-describedby="address"
+                              readonly
+                              title="Not Change"
+                              style="cursor:not-allowed"
+                              >
+                            </div>
+                          </div>
+                          <div class="mb-3 ">
+                            <label class="form-label" for="firstname">Departure Time</label>
+                            <div class="input-group input-group-merge">
+                              <input
+                              type="text"
+                              id="departure_time"
+                              class="form-control"
+                              name="departure_time"
+                              value="{{y.departure_time}}"
+                              placeholder=""
+                              aria-describedby="address"
+                              readonly
+                              title="Not Change"
+                              style="cursor:not-allowed"
+                              >
+                            </div>
+                          </div>
+                          <div class="mb-3 ">
+                            <label class="form-label" for="firstname">Destination Time</label>
+                            <div class="input-group input-group-merge">
+                              <input
+                              type="text"
+                              id="arrival_time"
+                              class="form-control"
+                              name="arrival_time"
+                              value="{{y.arrival_time}}"
+                              placeholder=""
+                              aria-describedby="address"
+                              readonly
+                              title="Not Change"
+                              style="cursor:not-allowed"
+                              >
+                            </div>
+                          </div>
+                          <div class="mb-3 ">
+                            <label class="form-label" for="firstname">Duration</label>
+                            <div class="input-group input-group-merge">
+                              <input
+                              type="text"
+                              id="duration"
+                              class="form-control"
+                              name="duration"
+                              value="{{y.duration}}"
+                              placeholder=""
+                              aria-describedby="address"
+                              readonly
+                              title="Not Change"
+                              style="cursor:not-allowed"
+                              >
+                            </div>
+                          </div>
+                          {% endfor %}
+                          {% endfor %}
+                          
+                          <div class="mb-3 form-password-toggle">
+                            <label class="form-label" for="phone" >Phone</label>
+                            <div class="input-group input-group-merge">
+                              <input
+                                type="text"
+                                id="phone"
+                                class="form-control"
+                                name="phone"
+                                placeholder="Enter Phone Number"
+                                aria-describedby="Phone number"
+                              />
+                            </div>
+                          </div>
+                          <div class="mb-3 form-password-toggle">
+                            <label class="form-label" for="address" >Address</label>
+                             <div class="input-group input-group-merge">
+                               <input
+                                 type="address"
+                                 id="address"
+                                 class="form-control"
+                                 name="address"
+                                 placeholder="Enter Phone Address"
+                                 aria-describedby="address"
+                               />
+                             </div>
+                           </div>
+                           <label class="form-label" for="firstname">Booking Time</label><br>
+                          <div class="input-group input-group-merge">
+                            <input
+                            type="text"
+                            id="date"
+                            class="form-control"
+                            name="book_date_time"
+                            placeholder=""
+                            aria-describedby="address"
+                            readonly
+                            title="Not Change"
+                            style="cursor:not-allowed"
+                          />
+                            <script>
+                              var date= new Date();
+                              
+                             
+                              
+                        
+                            document.getElementById("date").value = date;
+                            </script>
+                           
+                          </div>
+                          <div class=" mt-2 ">
+                            <div class="col-sm-50">
+                              <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                          </div> 
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+{% endblock %}

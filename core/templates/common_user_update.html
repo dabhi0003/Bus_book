@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Common User Update {% endblock  %}
+{% block link %}{% endblock  %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    {% comment %} <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">C /</span> Account</h4> {% endcomment %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                <li class="nav-item">
+                    <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Comon User Update</a>
+                </li>
+
+            </ul>
+            <div class="card mb-4">
+                <h5 class="card-header">common User Details</h5>
+                <!-- Account -->
+                <div class="card-body">
+                    <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <form id="formAccountSettings" method="post">
+                            {%csrf_token%}
+                            <div class="row">
+                                <div class="row">
+                                    {% for field in forms %}
+                                    <div class="mb-3 col-md-6">
+                                        <label for="firstName" class="form-label">{{field.label}}</label>
+                                        {{field}}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                                <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / Content -->
+
+</html>
+{% endblock %}

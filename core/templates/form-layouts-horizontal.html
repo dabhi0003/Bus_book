@@ -1,0 +1,94 @@
+
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Login Basic{% endblock  %}
+{% block link %}{% endblock  %}
+{% block content %}
+            
+              <!-- Basic Layout & Basic with Icons -->
+              <div class="container">
+                <div class="row mt-5">
+              
+                  <!-- Basic with Icons -->
+                  <div class="col-xxl">
+                    <div class="card mb-4">
+                      <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Add Bus</h5>
+                      </div>
+                      <div class="card-body">
+                        <form method="POST">
+                          {% csrf_token %}
+                          <div class="mb-3 form-password-toggle">
+                            <label class="form-label" for="firstname">Bus Name</label>
+                            <div class="input-group input-group-merge">
+                              <input
+                                type="text"
+                                id="bus_name"
+                                class="form-control"
+                                name="bus_name"
+                                placeholder="Enter Bus Name"
+                                aria-describedby="bus_name"
+                              />
+                             
+                            </div>
+                          </div>
+                          <div class="mb-3 form-password-toggle">
+                            <label class="form-label" for="firstname">bus number</label>
+                            <div class="input-group input-group-merge">
+                              <input
+                                type="text"
+                                id="bus_number"
+                                class="form-control"
+                                name="bus_number"
+                                placeholder="Enter Bus Number"
+                                aria-describedby="bus_number"
+                              />
+                             
+                            </div>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label" for="lastname">Select category</label>
+                            <select class="form-select" name="bus_category" aria-label="Default select example">
+                       
+                              <option value="Local" selected>Local</option>
+                              <option value="Express">Express</option>
+                            </select>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label" for="lastname">Select Type</label>
+                            <select class="form-select" name="bus_type" aria-label="Default select example">
+                       
+                              <option value="Ac-seating" >Ac-seating</option>
+                              <option value="Non-Ac-seating" selected>Non-Ac-seating</option>
+                              <option value="Ac-sleeping" >Ac-slepping</option>
+                              <option value="Non-Ac-sleeping" >Non-Ac-sleeping</option>
+                            </select>
+                          </div>
+                          <div class="mb-3 form-password-toggle">
+                            <label class="form-label" for="firstname">Bus seat</label>
+                            <div class="input-group input-group-merge">
+                              <input
+                                type="text"
+                                id="bus_seat"
+                                class="form-control"
+                                name="bus_seat"
+                                placeholder="Enter seats"
+                                aria-describedby="bus_seat"
+                              />
+                             
+                            </div>
+                          </div>
+                         
+                          <div class="row justify-content-end">
+                            <div class="col-sm-50">
+                              <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                          </div> 
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+{% endblock %}

@@ -1,0 +1,196 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Login Basic{% endblock  %}
+{% block link %}{% endblock  %}
+{% block content %}
+
+<!-- Basic Layout & Basic with Icons -->
+<div class="container">
+  <div class="row mt-5">
+
+    <!-- Basic with Icons -->
+    <div class="col-xxl">
+      <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <h5 class="mb-0">Search Destination</h5>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            <label class="form-label" for="firstname">Start Point</label>
+            <div class="input-group input-group-merge">
+              <select id="country" name="start_point" class="form-control">
+                <option value="">Select your StartPoint</option>
+                {% for i in all_city %}
+                <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+              </select>
+
+            </div>
+            <label class="form-label" for="firstname">End Point</label>
+            <div class="input-group input-group-merge">
+              <select id="country" name="end_point" class="form-control">
+                <option value="">Select your EndPoint</option>
+                {% for i in all_city %}
+                <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <label class="form-label" for="firstname">Journey Date</label><br>
+            <div class="input-group input-group-merge">
+              <input type="date" id="departure_date" class="form-control dep_arv_date_time" name="departure_date"
+                placeholder="Enter  Journey  Date" aria-describedby="departure_date" />
+            </div>
+            <div class="row mt-2  justify-content-center"><br>
+              <div class="col-sm-50">
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+            </div>
+          </form>
+          
+          
+          <div class="card mt-2">
+            <h5 class="card-header text-center" style="color:green;">BUS AVAILABLE</h5>
+            
+            <div id="bus-list"></div>
+          
+          </div>
+          <script>
+            const allBus = [{% for x in all_bus %}{% for y in x %}{% for k in y.buses %}{ bus_type: '{{k.bus_type}}', bus_name: '{{k.bus_name}}', start_point: '{{y.start_point}}', end_point: '{{y.end_point}}', departure_time: '{{y.departure_time}}', arrival_time: '{{y.arrival_time}}', via: '{{y.via}}', id: '{{k.id}}'},{% endfor %}{% endfor %}{% endfor %}];
+            
+            const busList = document.getElementById('bus-list');
+          
+            const acDiv = document.createElement('div');
+            acDiv.className = ' mt-2';
+            {% comment %} acDiv.style.border = '2px solid';
+            acDiv.style.borderRadius = '10px'; {% endcomment %}
+            acDiv.innerHTML = '<h5 class="pt-3 pl-2 text-left" style="color:red;">AC-Seating</h5>';
+          
+            const nonAcDiv = document.createElement('div');
+            nonAcDiv.className = ' mt-2';
+            {% comment %} nonAcDiv.style.border = '2px solid';
+            nonAcDiv.style.borderRadius = '10px'; {% endcomment %}
+            nonAcDiv.innerHTML = '<h5 class="pt-3 pl-2 text-left" style="color:red;">Non-AC-Seating</h5>';
+
+            const acsleepingDiv = document.createElement('div');
+            acsleepingDiv.className = ' mt-2';
+            {% comment %} nonAcDiv.style.border = '2px solid';
+            nonAcDiv.style.borderRadius = '10px'; {% endcomment %}
+            acsleepingDiv.innerHTML = '<h5 class="pt-3 pl-2 text-left" style="color:red;">AC-sleeping</h5>';
+
+            const nonacsleepingDiv = document.createElement('div');
+            nonacsleepingDiv.className = ' mt-2';
+            {% comment %} nonAcDiv.style.border = '2px solid';
+            nonAcDiv.style.borderRadius = '10px'; {% endcomment %}
+            nonacsleepingDiv.innerHTML = '<h5 class="pt-3 pl-2 text-left" style="color:red;">Non-AC-sleeping</h5>';
+
+            
+          
+            let acDivCreated = false;
+            let nonAcDivCreated = false;
+            let acsleepingDivCreated = false;
+            let nonacsleepingDivCreated = false;
+          
+            allBus.forEach(bus => {
+              const cardDiv = document.createElement('div');
+              cardDiv.className = 'card mt-2 w-auto';
+              cardDiv.style.border = '2px solid';
+              cardDiv.style.borderRadius = '10px';
+          
+              const busName = document.createElement('label');
+              busName.className = 'pt-2 pl-2';
+              busName.innerHTML = `Bus Name: ${bus.bus_name}`;
+          
+              const startPoint = document.createElement('label');
+              startPoint.className = 'pt-2 pl-2';
+              startPoint.innerHTML = `START POINT: ${bus.start_point}`;
+          
+              const endPoint = document.createElement('label');
+              endPoint.className = 'pt-2 pl-2';
+              endPoint.innerHTML = `END POINT: ${bus.end_point}`;
+          
+              const departureTime = document.createElement('label');
+              departureTime.className = 'pt-2 pl-2';
+              departureTime.innerHTML = `DEPARTURE TIME: ${bus.departure_time}`;
+          
+              const arrivalTime = document.createElement('label');
+              arrivalTime.className = 'pt-2 pl-2';
+              arrivalTime.innerHTML = `ARRIVAL TIME: ${bus.arrival_time}`;
+
+              
+          
+              const via = document.createElement('label');
+              via.className = 'pt-2 pl-2';
+              via.innerHTML = `VIA: ${bus.via}`;
+          
+              const bookBtn = document.createElement('div');
+              bookBtn.className = 'd-flex justify-content-center mx-auto gap-3 mb-2';
+              bookBtn.innerHTML = `<a href="/core/seat/${bus.id}/" class="btn pr-5 pl-5 btn-danger">BOOK</a>`;
+              
+              if (bus.bus_type === 'Ac-seating') {
+                if (!acDivCreated) {
+                  busList.appendChild(acDiv);
+                  acDivCreated = true;
+                }
+                busList.appendChild(cardDiv);
+                cardDiv.appendChild(busName);
+                cardDiv.appendChild(startPoint);
+                cardDiv.appendChild(endPoint);
+                cardDiv.appendChild(departureTime);
+                cardDiv.appendChild(arrivalTime);
+                cardDiv.appendChild(via);
+                cardDiv.appendChild(bookBtn);
+                acDiv.appendChild(cardDiv);
+                } else if (bus.bus_type === 'Non-Ac-seating') {
+                if (!nonAcDivCreated) {
+                busList.appendChild(nonAcDiv);
+                nonAcDivCreated = true;
+                }
+                busList.appendChild(cardDiv);
+                cardDiv.appendChild(busName);
+                cardDiv.appendChild(startPoint);
+                cardDiv.appendChild(endPoint);
+                cardDiv.appendChild(departureTime);
+                cardDiv.appendChild(arrivalTime);
+                cardDiv.appendChild(via);
+                cardDiv.appendChild(bookBtn);
+                nonAcDiv.appendChild(cardDiv);
+                }else if (bus.bus_type === 'Ac-sleeping') {
+                if (!acsleepingDivCreated) {
+                busList.appendChild(acsleepingDiv);
+                acsleepingDivCreated = true;
+                }
+                busList.appendChild(cardDiv);
+                cardDiv.appendChild(busName);
+                cardDiv.appendChild(startPoint);
+                cardDiv.appendChild(endPoint);
+                cardDiv.appendChild(departureTime);
+                cardDiv.appendChild(arrivalTime);
+                cardDiv.appendChild(via);
+                cardDiv.appendChild(bookBtn);
+                acsleepingDiv.appendChild(cardDiv);
+                }else if (bus.bus_type === 'Non-Ac-sleeping') {
+                if (!nonacsleepingDivCreated) {
+                busList.appendChild(nonacsleepingDiv);
+                nonacsleepingDivCreated = true;
+                }
+                busList.appendChild(cardDiv);
+                cardDiv.appendChild(busName);
+                cardDiv.appendChild(startPoint);
+                cardDiv.appendChild(endPoint);
+                cardDiv.appendChild(departureTime);
+                cardDiv.appendChild(arrivalTime);
+                cardDiv.appendChild(via);
+                cardDiv.appendChild(bookBtn);
+                nonacsleepingDiv.appendChild(cardDiv);
+                } 
+                
+                });
+                </script>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}

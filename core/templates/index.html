@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+{% load static %}
+{% include 'sidebar.html' %}
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../assets/"
+  data-template="vertical-menu-template-free"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title> {% block title %}Admin-Dash{% endblock  %}  </title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css"/> 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/boxicons.css' %}" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/core.css' %}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{% static 'assets/vendor/css/theme-default.css' %}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/seat.css' %}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'assets/vendor/libs/apex-charts/apex-charts.css' %}" />
+    {% block link %}{% endblock  %}
+    <style>{% block style %}{% endblock  %}</style>
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script defer src="{% static 'assets/vendor/js/helpers.js' %}"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script defer src="{% static 'assets/js/config.js' %}"></script>
+  </head>
+  
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+          <nav
+            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar"
+          >
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                 
+                </div>
+              </div>
+              <!-- /Search -->
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Place this tag where you want the button to render. -->
+                 
+               
+
+                <!-- User -->
+                {% if request.user.is_authenticated %}
+                <h3>{{user.username}}</h3>
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      {% if user.profile_img %}
+                         <img style="height:40px; width:40px; border-radius: 50%;"  class="img-thumbnail" src="{{user.profile_img.url}}" alt="profile.jpg">
+                      {% else %}
+                      <img style="height:40px; width:40px; border-radius: 50%;"  class="img-thumbnail" src="{% static 'img/profile.jpg' %}" alt="my img">
+                      {% endif %}
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+
+                      <div class="d-flex">
+                      {% if user.profile_img %}
+                      <img style="height:100px; width:100px; " src="{{user.profile_img.url}}" height="100" width="100" alt="">
+                      {% else %}
+                      <img style="height:100px; width:100px;" class="img-thumbnail" src="{% static 'img/profile.jpg' %}" height="100" width="100" alt="my img">
+                      {% endif %}
+                      <a class="dropdown-item" href="#">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block"> {{user.username}}</span>
+                            <small class="text-muted"></small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="/core/account/{{user.id}}/">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                   
+                      
+                    <li>
+                      <a class="dropdown-item" href="/core/logout1/">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+                {% endif %}
+              </ul>
+            </div>
+          </nav>
+          <!-- / Navbar -->
+          <div class="container mt-3" style="">
+          {% for message in messages %}
+                {% if message.tags == 'info' %}
+                  <div class="alert alert-danger text-center" role="alert">
+                    {{message}}
+                  </div>
+                {% else %}
+                  <div class="alert alert-success text-center" role="alert">
+                    {{message}}
+                  </div>
+                {% endif %}
+              {% endfor %}   
+          
+          </div>
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+            {% block content %}
+            
+
+            {% endblock  %}
+            <!-- / Content -->
+
+            <!-- Footer -->
+            
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+ 
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    
+
+    <script defer src="{% static 'assets/vendor/libs/jquery/jquery.js' %}"></script>
+    <script defer src="{% static 'assets/vendor/libs/popper/popper.js' %}"></script>
+    <script defer src="{% static 'assets/vendor/js/bootstrap.js' %}"></script>
+    <script defer src="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+
+    <script defer src="{% static 'assets/vendor/js/menu.js' %}"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script defer src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script>
+
+    <!-- Main JS -->
+    <script defer src="{% static 'assets/js/main.js' %}"></script>
+
+    <!-- Page JS -->
+    <script defer src="{% static 'assets/js/dashboards-analytics.js' %}"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    {% block script %}{% endblock  %}
+  </body>
+</html>

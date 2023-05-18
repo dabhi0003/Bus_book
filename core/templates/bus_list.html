@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Bus list{% endblock  %}
+{% block link %}{% endblock  %}
+{% block content %}
+
+
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+
+        <!-- Menu -->
+
+        
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <!-- Content -->
+{% comment %}           
+          {% for message in messages %}
+          {% if message.tags == 'info' %}
+          <div class="alert alert-danger" role="alert">
+            {{message}}
+          </div>
+          {% else %}
+          <div class="alert alert-success" role="alert">
+            {{message}}
+          </div>
+          {% endif %}
+          {% endfor %}  {% endcomment %}
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Bus / List</span> </h4>
+
+              <!-- Basic Bootstrap Table -->
+              <div class="card">
+                <h5 class="card-header">Bus List</h5>
+                <div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class='text-center'>No</th>
+                        <th class='text-center'>Bus Name</th>
+                        <th class='text-center'>Bus Number</th>
+                        <th class='text-center'>Bus Category</th>
+                        <th class='text-center'>Bus Type</th>
+                        <th class='text-center'>Bus Seats</th>
+                        <th class='text-center'>Bus Available</th>
+                        <th class='text-center'>Actions</th>
+
+                      </tr>
+                    </thead>
+                     <tbody class="table-border-bottom-0">
+                        {% for x in all_bus %}
+                      <tr>
+                        <td class='text-center'>{{forloop.counter}}</td>
+                        <td class='text-center'>{{x.bus_name}}</td>
+                        <td class='text-center'>{{x.bus_number}}</td>
+                        <td class='text-center'>{{x.bus_category}}</td>
+                        <td class='text-center'>{{x.bus_type}}</td>
+                        <td class='text-center'>{{x.bus_seat}}</td>
+                        <td >
+                        {%if x.bus_status%}
+                          <h4 style='color:green' class='text-center'>&#10003;</h4>
+                        {%else%}
+                          <h4 style='color:red' class='text-center'>&#x274C;</h4>
+                        {%endif%}
+                        </td >
+                        <div class="dropdown">
+                        <td class='text-center'>
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                              <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="/core/bus_list_update/{{x.id}}/"
+                                ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                              >
+                              <a class="dropdown-item" href="/core/delete_bus/{{x.id}}/"
+                                ><i class="bx bx-trash me-1"></i> Delete</a
+                              >
+                            </div>
+                          </td>
+                        </div>
+
+                      </tr>
+                      {% endfor %}
+                      
+                    </tbody> 
+                  </table>
+                </div>
+              </div>
+              <!--/ Basic Bootstrap Table -->
+
+             
+              <!--/ Responsive Table -->
+            </div>
+        </div>
+            <!-- / Content -->
+
+
+
+
+ 
+{% endblock %}

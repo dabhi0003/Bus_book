@@ -1,0 +1,180 @@
+<!-- Menu -->
+
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="app-brand demo  mt-3">
+      <a href="/core/home/" class="app-brand-link">
+        <span class="app-brand-logo demo">
+        </span>
+        <span class="app-brand-text demo menu-text fw-bolder ms-2">BusBook</span>
+      </a>  
+
+      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+        <i class="bx bx-chevron-left bx-sm align-middle"></i>
+      </a>
+    </div>
+
+    <div class="menu-inner-shadow"></div><br>
+
+    <ul class="menu-inner py-1">
+      <!-- Dashboard -->
+      <li class="menu-item active">
+        <a href="/core/home/" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-home-circle"></i>
+          <div >Dashboard</div>
+        </a>
+      </li>
+
+
+      {% comment %} <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Account Settings</span>
+      </li> {% endcomment %}
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-dock-top"></i>
+          <div >Account Settings</div>
+        </a>
+          <ul class="menu-sub">
+            <li class="menu-item">
+              <a href="/core/account/{{user.id}}/" class="menu-link">
+                <div >Account</div>
+              </a>
+            </li>
+          </ul>  
+
+      </li>
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+          <div >Authentications</div>
+        </a>
+        <ul class="menu-sub">
+        {% if request.user.is_superuser %}
+          <li class="menu-item">
+            <a href="/core/register/" class="menu-link" >
+              <div >Register</div>
+            </a>
+          </li>
+        {% endif %}
+          <li class="menu-item">
+            <a href="/core/change_password/" class="menu-link">
+              <div >Change Password</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+    {% if request.user.is_superuser  %}
+
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+          <div >User List</div>
+        </a>
+        <ul class="menu-sub">
+          
+          <li class="menu-item">
+            <a href="/core/admin_list/" class="menu-link" >
+              <div >Register Admin User</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/core/staff_list/" class="menu-link">
+              <div >Register Staff User</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/core/common-user-list/" class="menu-link">
+              <div >Common User List</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+    {% endif %}
+    {% if request.user.is_staff %}
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-dock-top"></i>
+          <div >Bus & Journey </div>
+        </a>
+        <ul class="menu-sub">
+        
+          <li class="menu-item">
+            <a href="/core/form1/" class="menu-link" >
+              <div >AddBus</div>  
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/core/form2/" class="menu-link" >
+              <div >Journey Root</div>  
+            </a>
+          </li>
+        </ul>
+      </li>
+      {% endif %}
+
+      {% if request.user.is_superuser %}
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-dock-top"></i>
+          <div >Bus And Journey List </div>
+        </a>
+        <ul class="menu-sub">
+          
+          <li class="menu-item">
+            <a href="/core/bus_list/" class="menu-link" >
+              <div >Bus List</div>  
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/core/journey_root_list/" class="menu-link" >
+              <div >Journey Root List</div>  
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/core/book_ticket_list/" class="menu-link" >
+              <div >Booking List</div>  
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="#" class="menu-link" >
+              <div >Cancle Booking List</div>  
+            </a>
+          </li>
+          
+        </ul>
+      </li>
+      {% endif %}
+
+      {% if request.user.is_staff is False and request.user.is_superuser is False  %}
+      <li class="menu-item">
+        <a href="javascript:void(0);"  class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-dock-top"></i>
+          <div >Bus Booking </div>
+        </a>
+        
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="/core/search_bus/" class="menu-link" >
+              <div >BookBus</div>  
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/core/ticket_details/" class="menu-link" >
+              <div >Ticket Details</div>  
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/core/home/" class="menu-link" >
+              <div >Cancle Ticket</div>  
+            </a>
+          </li>
+        </ul>
+      </li>
+      {% endif %}
+     
+      <!-- Tables -->
+    
+      <!-- Misc -->
+    </ul>
+
+  </aside>
+  <!-- / Menu -->

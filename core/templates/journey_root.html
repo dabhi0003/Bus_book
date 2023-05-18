@@ -1,0 +1,213 @@
+
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Login Basic{% endblock  %}
+{% block link %}{% endblock  %}
+{% block content %}
+
+              <!-- Basic Layout & Basic with Icons -->
+              <div class="container">
+                <div class="row mt-5">
+              
+                  <!-- Basic with Icons -->
+                  <div class="col-xxl">
+                    <div class="card mb-4">
+                      <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Journey Root</h5>
+                      </div>
+                      <div class="card-body">
+                        {% comment %} {% for message in messages %}
+                        {% if message.tags == 'info' %}
+                          <div class="alert alert-danger" role="alert">
+                            {{message}}
+                          </div>
+                        {% else %}
+                          <div class="alert alert-success" role="alert">
+                            {{message}}
+                          </div>
+                        {% endif %}
+                      {% endfor %}  {% endcomment %}
+                        <form method="POST">
+                          {% csrf_token %}
+                          <div class="mb-3 form-password-toggle">
+                            <label class="form-label" for="firstname">Start Point</label>
+                            <div class="input-group input-group-merge">
+                              <select id="country" name="start_point" class="form-control" >  
+                                <option value="">Select your StartPoint</option>
+                                {% for i in city %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                               </select>
+                             
+                            </div>
+                          </div>
+                          <div class="mb-3 form-password-toggle">
+                            <label class="form-label" for="firstname">end point</label>
+                            <div class="input-group input-group-merge">
+                              <select id="country" name="end_point" class="form-control" >  
+                                <option value="">Select your EndPoint</option>
+                                {% for i in city %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                               </select>
+                             
+                            </div>
+                            <label class="form-label" for="firstname">Kilometer</label>
+                            <div class="input-group input-group-merge">
+                              <input
+                                type="text"
+                                id="kilometer"
+                                class="form-control"
+                                name="kilometer"
+                                placeholder="Enter kilometer of Root"
+                                aria-describedby="kilometer"
+                                onchange="calculatePrice()"
+
+                              />
+                             
+                            </div>
+                          </div>
+                          <label class="form-label" for="firstname">Price for one kilometer</label>
+                          <div class="input-group input-group-merge">
+                            <input
+                              type="text"
+                              id="one_kilometer_price"
+                              class="form-control"
+                              name="one_kilometer_price"
+                              placeholder="Enter one kilometer of price"
+                              aria-describedby="one_kilometer_price"
+                              onchange="calculatePrice()"
+                            />
+                           
+                          </div>
+                          <label class="form-label" for="firstname">Price</label>
+                          <div class="input-group input-group-merge">
+                            <input
+                              type="text"
+                              id="price"
+                              class="form-control"
+                              name="price"
+                              placeholder="Enter  price"
+                              aria-describedby="price"
+                              style="cursor: not-allowed;"
+                              title="Not Change"
+                              onchange="calculatePrice()"
+                              readonly
+                            />
+                           
+                          </div>
+                          <label class="form-label" for="firstname">Departure Date</label><br>
+                          <div class="input-group input-group-merge">
+                            <input
+                              type="date"
+                              id="departure_date"
+                              class="form-control dep_arv_date_time"
+                              name="departure_date"
+                              placeholder="Enter  Departure Date"
+                              aria-describedby="departure_date"
+                              
+                            />
+                           
+                          </div>
+                          
+                          <label class="form-label" for="firstname">Departure Time</label><br>
+                          <div class="input-group input-group-merge">
+                            <input
+                              type="time"
+                              id="departure_time"
+                              class="form-control dep_arv_date_time"
+                              name="departure_time"
+                              placeholder="Enter  Departure Date"
+                              aria-describedby="departure"
+                             
+                            />
+                           
+                          </div>
+                          <label class="form-label" for="firstname">Arrival Date</label><br>
+                          <div class="input-group input-group-merge">
+                            <input
+                              type="date"
+                              id="arrival_date"
+                              class="form-control dep_arv_date_time"
+                              name="arrival_date"
+                              placeholder="Enter  Arrival Date"
+                              aria-describedby="duration"
+                            />
+                           
+                          </div>
+                          
+                          <label class="form-label" for="firstname">Arrival Time</label><br>
+                          <div class="input-group input-group-merge">
+                            <input
+                              type="time"
+                              id="arrival_time"
+                              class="form-control dep_arv_date_time"
+                              name="arrival_time"
+                              placeholder="Enter  Arrival Time"
+                              aria-describedby="duration"
+                            />
+                           
+                          </div>
+
+
+                          <label class="form-label" for="firstname">Duration</label>
+                          <div class="input-group input-group-merge">
+                            <input
+                              type="text"
+                              id="duration"
+                              class="form-control"
+                              name="duration"
+                              placeholder="Enter duration"
+                              aria-describedby="duration"
+                              style="cursor: not-allowed;"
+                              title="Not Change"
+                              
+                              readonly
+                            />
+                           
+                          </div>
+
+                          <label class="form-label" for="firstname">Via</label>
+                          <div class="input-group input-group-merge">
+                            <input
+                              type="text"
+                              id="via"
+                              class="form-control"
+                              name="via"
+                              placeholder="Enter Station from where bus is pass...."
+                              aria-describedby="via"
+                              onchange="calculatePrice()"
+
+                            />
+                          
+                           
+                          </div>
+
+                          <div class="mt-1 mb-3">
+                            <label class="form-label" for="lastname">Select Bus</label>
+                            <div class="input-group input-group-merge">
+                            <select name="bus" id="cars" multiple style='width:100%; border-raduis:10px;'>
+                                {% for bus in all_bus %}
+                                 <option value="{{bus.id}}">{{bus.bus_name}}</option>
+                                {% endfor %}
+                              </select>
+                            </div>
+                          </div>                         
+                          <div class="row justify-content-end">
+                            <div class="col-sm-50">
+                              <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                          </div> 
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+{% endblock %}
+{% block script %}
+<script  defer src="{% static 'js/journey.js'%}"></script>
+<script defer src="http://code.jquery.com/jquery-latest.js"></script>
+
+{% endblock  %}
