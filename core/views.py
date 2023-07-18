@@ -512,6 +512,7 @@ class BusBook(View):
             ticket.save()
             messages.success(request,"Ticket book succesfully... ")
             return redirect("home")
+
         else:
             messages.info(request,"user not found... ")
             return redirect("home")
@@ -549,11 +550,12 @@ class Seat(View):
             selectseat=[]
             selected_seat=BookTicket.objects.filter(bus__bus_name=bus)
             for i in selected_seat.values('slected_seat'):
-                seat_list=ast.literal_eval(i['slected_seat'])  
-                selectseat.extend(seat_list)
-            sequence = []
-            for i in range(1, seat+1):
-                sequence.append(i)
+                seat_value = i['slected_seat']
+                if isinstance(seat_value, str):
+                    seat_list = ast.literal_eval(seat_value)
+                    if isinstance(seat_list, list):
+                        selectseat.extend(seat_list)
+            sequence = list(range(1, seat+1))
             context = {
                 'l1': seat,
                 'sequence': sequence,
